@@ -9,8 +9,13 @@ const TagsEditor = ({ addTags, removeTags, tags }) => {
       };
 
       const handleKeyUp = (event) => {
+            // Prevent form submission when Enter is pressed
             if (event.key === "Enter") {
-                  addTags(event);
+                  event.preventDefault(); // Prevent form from submitting
+                  if (inputValue.trim() !== "") {
+                        addTags(event); // Add the tag
+                        setInputValue(""); // Clear input field
+                  }
             }
       };
 
@@ -31,6 +36,7 @@ const TagsEditor = ({ addTags, removeTags, tags }) => {
                   </ul>
                   <input
                         type="text"
+                        value={inputValue} // Bind the input value to state
                         onChange={handleInputChange}
                         onKeyUp={handleKeyUp}
                         placeholder="Press enter to add tags"

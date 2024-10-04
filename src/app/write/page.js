@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import JoditEditor from "jodit-react";
+import React, { useEffect, useState } from "react";
 import TextEditor from "@/Components/TextEditor/TextEditor";
 import { useForm } from "react-hook-form";
 import TagsEditor from "@/Components/TagsEditor/TagsEditor";
@@ -9,7 +8,6 @@ import TagsEditor from "@/Components/TagsEditor/TagsEditor";
 const Page = ({ placeholder }) => {
       const [content, setContent] = useState("");
       const [productTags, setProductTags] = useState([]);
-
       const {
             register,
             handleSubmit,
@@ -17,21 +15,38 @@ const Page = ({ placeholder }) => {
             reset,
       } = useForm();
 
+      // Load the saved data from localStorage when the component mounts
+      useEffect(() => {
+            const savedTitle = localStorage.getItem("blogTitle");
+            const savedSubtitle = localStorage.getItem("blogSubtitle");
+            const savedTags = localStorage.getItem("productTags");
+
+            if (savedTitle) register("blogTitle", { value: savedTitle });
+            if (savedSubtitle)
+                  register("blogSubtitle", { value: savedSubtitle });
+            if (savedTags) setProductTags(JSON.parse(savedTags)); // Parse string to array
+      }, [register]);
+
+      // Save the form data to localStorage on change
+      const handleInputChange = (name, value) => {
+            localStorage.setItem(name, value);
+      };
+
       const removeTags = (tagsState, setTagsState, indexToRemove) => {
-            setTagsState([
-                  ...tagsState.filter((_, index) => index !== indexToRemove),
-            ]);
+            const newTags = tagsState.filter(
+                  (_, index) => index !== indexToRemove
+            );
+            setTagsState(newTags);
+            localStorage.setItem("productTags", JSON.stringify(newTags)); // Save updated tags
       };
 
       const addTags = (tagsState, setTagsState, event) => {
             if (event.target.value !== "") {
-                  setTagsState([...tagsState, event.target.value]);
+                  const newTags = [...tagsState, event.target.value];
+                  setTagsState(newTags);
+                  localStorage.setItem("productTags", JSON.stringify(newTags)); // Save updated tags
                   event.target.value = "";
             }
-      };
-
-      const selectedTags = (tags) => {
-            //console.log(tags);
       };
 
       const handleData = (data) => {
@@ -42,6 +57,13 @@ const Page = ({ placeholder }) => {
                   tags: productTags,
             };
             console.log(blogData);
+
+            // Clear local storage after submission
+            localStorage.removeItem("blogTitle");
+            localStorage.removeItem("blogSubtitle");
+            localStorage.removeItem("editorContent");
+            localStorage.removeItem("productTags");
+
             setContent("");
             setProductTags([]);
             reset();
@@ -66,6 +88,12 @@ const Page = ({ placeholder }) => {
                                     {...register("blogTitle", {
                                           required: "Blog title is required",
                                     })}
+                                    onChange={(e) =>
+                                          handleInputChange(
+                                                "blogTitle",
+                                                e.target.value
+                                          )
+                                    }
                                     className="w-full border-b border-neutral-300 py-4 px-2 rounded-md block outline-none text-[1.3rem]"
                               />
                               {errors.blogTitle && (
@@ -91,6 +119,12 @@ const Page = ({ placeholder }) => {
                                     {...register("blogSubtitle", {
                                           required: "Blog subtitle is required",
                                     })}
+                                    onChange={(e) =>
+                                          handleInputChange(
+                                                "blogSubtitle",
+                                                e.target.value
+                                          )
+                                    }
                                     className="w-full border-b border-neutral-300 py-4 px-2 rounded-md block outline-none text-[1.3rem]"
                               />
                               {errors.blogSubtitle && (
@@ -110,7 +144,7 @@ const Page = ({ placeholder }) => {
                         {/* Tags field */}
                         <div>
                               <TagsEditor
-                                    selectedTags={selectedTags}
+                                    selectedTags={() => {}}
                                     tags={productTags}
                                     removeTags={(index) =>
                                           removeTags(
