@@ -79,29 +79,45 @@ const Page = ({ placeholder }) => {
             document.getElementById("file-upload").click();
       };
 
-      const handleImageUrl = async (url) => {
-            // const ref = await axios.post(
-            //       "http://localhost:5000/api/v1/image/upload"
-            // );
-            setImgLiveUrl(url.slice(0, 5));
-            // console.log(ref);
+      const handleImageUrl = async (file) => {
+            const formData = new FormData();
+            formData.append("blogImage", file);
+
+            try {
+                  const response = await axios.post(
+                        "http://localhost:5050/api/v1/image/upload",
+                        formData,
+                        {
+                              headers: {
+                                    "Content-Type": "multipart/form-data",
+                              },
+                        }
+                  );
+                  if (response) {
+                        toast.success(response.data.message);
+                  }
+                  console.log(response);
+                  const imageUrl = response.data.data.url; // Assuming response includes image URL
+                  setImgLiveUrl(imageUrl);
+            } catch (error) {
+                  console.error("Image upload failed:", error);
+            }
       };
 
       // img render
       const handleFileChange = (event) => {
             if (event.target.files && event.target.files[0]) {
+                  const file = event.target.files[0];
                   const reader = new FileReader();
 
                   reader.onload = (e) => {
                         setImageSrc(e.target.result);
-                        if (e.target.result) {
-                              handleImageUrl(e.target.result);
-                        } else {
-                              console.log("image is not available");
-                        }
                   };
 
-                  reader.readAsDataURL(event.target.files[0]);
+                  reader.readAsDataURL(file);
+
+                  // Upload the file
+                  handleImageUrl(file);
             }
       };
 
@@ -109,13 +125,13 @@ const Page = ({ placeholder }) => {
             navigator.clipboard
                   .writeText(imgLiveUrl)
                   .then(() => {
-                        // alert("Text copied to clipboard!");
                         toast("Text copied to clipboard!");
                   })
                   .catch((err) => {
                         console.error("Failed to copy text: ", err);
                   });
       };
+
       return (
             <div className="w-full lg:w-[75%] mx-auto py-10 px-10 flex flex-col lg:flex-row items-start gap-5">
                   <form
