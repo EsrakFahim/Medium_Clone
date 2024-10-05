@@ -3,11 +3,11 @@
       align-items: flex-start;
       flex-wrap: wrap;
       min-height: 48px;
-      width: 50%;
+      /* width: 50%; */
       padding: 0 8px;
       border: 1px solid rgb(214, 216, 218);
       border-radius: 6px;
-      margin: 40px 0;
+      margin: 20px 0;
 }
 
 .tags-input:focus-within {

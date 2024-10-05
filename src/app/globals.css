@@ -50,3 +50,7 @@ h6 {
       color: #888;
       /* margin-bottom: 10px; */
 }
+
+.jodit-status-bar__item-right a{
+      display: none !important;
+}
