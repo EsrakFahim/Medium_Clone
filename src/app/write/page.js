@@ -59,7 +59,7 @@ const Page = ({ placeholder }) => {
             const blogData = {
                   title: data.blogTitle,
                   subtitle: data.blogSubtitle,
-                  content: content,
+                  content,
                   tags: productTags,
             };
             console.log(blogData);
@@ -96,7 +96,6 @@ const Page = ({ placeholder }) => {
                   if (response) {
                         toast.success(response.data.message);
                   }
-                  console.log(response);
                   const imageUrl = response.data.data.url; // Assuming response includes image URL
                   setImgLiveUrl(imageUrl);
             } catch (error) {
@@ -104,7 +103,7 @@ const Page = ({ placeholder }) => {
             }
       };
 
-      // img render
+      // Image render
       const handleFileChange = (event) => {
             if (event.target.files && event.target.files[0]) {
                   const file = event.target.files[0];
@@ -164,12 +163,12 @@ const Page = ({ placeholder }) => {
                               />
                               {errors.blogTitle && (
                                     <p className="text-red-600">
-                                          {errors.blogTitle?.message}
+                                          {errors.blogTitle.message}
                                     </p>
                               )}
                         </div>
 
-                        {/* Sub title field */}
+                        {/* Subtitle field */}
                         <div className="mb-5 py-5 flex flex-col items-start justify-start gap-6">
                               <label
                                     htmlFor="blog_Subtitle"
@@ -195,22 +194,20 @@ const Page = ({ placeholder }) => {
                               />
                               {errors.blogSubtitle && (
                                     <p className="text-red-600">
-                                          {errors.blogSubtitle?.message}
+                                          {errors.blogSubtitle.message}
                                     </p>
                               )}
                         </div>
 
                         {/* Image input field */}
                         <div className="mb-5 py-5 flex flex-col items-start justify-start gap-6">
-                              {/* remember this field take an image and return an image url  */}
                               <label
                                     htmlFor="blog_Subtitle"
                                     className="text-black ml-1 text-[1.3em] leading-8"
                               >
                                     Blog Image{" "}
                                     <span className="text-sm text-gray-400">
-                                          (It gives a url and use that url into
-                                          your blog)
+                                          (It gives a URL to use in your blog)
                                     </span>
                               </label>
                               <div
@@ -237,7 +234,7 @@ const Page = ({ placeholder }) => {
                                                             handleUploadClick
                                                       }
                                                 >
-                                                      <h5>upload your photo</h5>
+                                                      <h5>Upload your photo</h5>
                                                 </div>
                                           )}
                                           <input
@@ -245,23 +242,19 @@ const Page = ({ placeholder }) => {
                                                 id="file-upload"
                                                 accept="image/*"
                                                 className="file-upload"
-                                                style={{
-                                                      display: "none",
-                                                }}
+                                                style={{ display: "none" }}
                                           />
                                     </div>
                               </div>
-                              <div>
-                                    {imgLiveUrl && (
-                                          <p
-                                                onClick={handleCopy}
-                                                className="text-gray-500 flex items-center gap-3 cursor-pointer border border-gray-300 rounded-md p-2"
-                                          >
-                                                {imgLiveUrl}
-                                                <MdOutlineContentCopy />
-                                          </p>
-                                    )}
-                              </div>
+                              {imgLiveUrl && (
+                                    <p
+                                          onClick={handleCopy}
+                                          className="text-gray-500 flex items-center gap-3 cursor-pointer border border-gray-300 rounded-md p-2"
+                                    >
+                                          {imgLiveUrl}
+                                          <MdOutlineContentCopy />
+                                    </p>
+                              )}
                         </div>
 
                         {/* Content field */}
@@ -279,18 +272,16 @@ const Page = ({ placeholder }) => {
                               Submit
                         </button>
                   </form>
+
                   <div className="w-full lg:w-[30%]">
                         {/* Tags field */}
                         <div>
-                              <div>
-                                    <label className="text-black ml-1 text-[1.3em] leading-8">
-                                          Tags
-                                          <span className="text-sm text-gray-400">
-                                                {" "}
-                                                (Press enter to add tags)
-                                          </span>
-                                    </label>
-                              </div>
+                              <label className="text-black ml-1 text-[1.3em] leading-8">
+                                    Tags{" "}
+                                    <span className="text-sm text-gray-400">
+                                          (Press enter to add tags)
+                                    </span>
+                              </label>
                               <TagsEditor
                                     selectedTags={() => {}}
                                     tags={productTags}
