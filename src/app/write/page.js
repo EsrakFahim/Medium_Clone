@@ -55,7 +55,7 @@ const Page = ({ placeholder }) => {
             }
       };
 
-      const handleData = (data) => {
+      const handleData = async (data) => {
             const blogData = {
                   title: data.blogTitle,
                   subtitle: data.blogSubtitle,
@@ -63,6 +63,22 @@ const Page = ({ placeholder }) => {
                   tags: productTags,
             };
             console.log(blogData);
+
+            // Send the data to the server
+            const response = await axios.post(
+                  "http://localhost:5050/api/v1/blog/upload",
+                  blogData,
+
+                  {
+                        headers: {
+                              "Content-Type": "application/json",
+                        },
+                  }
+            );
+
+            if (response) {
+                  toast.success(response.data.message);
+            }
 
             // Clear local storage after submission
             localStorage.removeItem("blogTitle");
