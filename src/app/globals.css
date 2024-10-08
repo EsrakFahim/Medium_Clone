@@ -7,7 +7,7 @@ h1 {
       font-size: 48px;
       /* Custom size */
       font-weight: bold;
-      color: #333;
+      /* color: #333; */
       /* margin-bottom: 20px; */
 }
 
@@ -15,7 +15,7 @@ h2 {
       font-size: 40px;
       /* Custom size */
       font-weight: bold;
-      color: #444;
+      /* color: #444; */
       /* margin-bottom: 18px; */
 }
 
@@ -23,7 +23,7 @@ h3 {
       font-size: 32px;
       /* Custom size */
       font-weight: bold;
-      color: #555;
+      /* color: #555; */
       /* margin-bottom: 16px; */
 }
 
@@ -31,7 +31,7 @@ h4 {
       font-size: 24px;
       /* Custom size */
       font-weight: bold;
-      color: #666;
+      /* color: #666; */
       /* margin-bottom: 14px; */
 }
 
@@ -39,7 +39,7 @@ h5 {
       font-size: 18px;
       /* Custom size */
       font-weight: bold;
-      color: #777;
+      /* color: #777; */
       /* margin-bottom: 12px; */
 }
 
@@ -47,10 +47,10 @@ h6 {
       font-size: 14px;
       /* Custom size */
       font-weight: bold;
-      color: #888;
+      /* color: #888; */
       /* margin-bottom: 10px; */
 }
 
-.jodit-status-bar__item-right a{
+.jodit-status-bar__item-right a {
       display: none !important;
 }
