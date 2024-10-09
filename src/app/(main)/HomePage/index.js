@@ -4,6 +4,11 @@ import axios from "axios";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { SlLike } from "react-icons/sl";
+import { FaRegCommentAlt } from "react-icons/fa";
+import { CiCircleMinus, CiBookmarkPlus } from "react-icons/ci";
+import { FaBookmark } from "react-icons/fa";
+import { BsThreeDots } from "react-icons/bs";
 
 const HomePage = () => {
       const [blogs, setBlogs] = useState([]);
@@ -30,29 +35,33 @@ const HomePage = () => {
 
       return (
             <div>
-                  <div className="max-w-[70%] mx-auto flex items-start gap-5">
-                        <div className="w-[70%] h-[500px] flex flex-col gap-10">
+                  <div className="w-full xl:max-w-[70%] mx-auto flex items-start gap-5">
+                        <div className="w-full lg:w-[70%] flex  flex-col gap-10">
                               {/* Display the fetched blogs here */}
                               {blogs.length > 0 ? (
                                     blogs.map((blog) => (
                                           <div
                                                 key={blog.id}
-                                                className="flex items-center justify-between"
+                                                className="flex items-center justify-between border-b border-b-neutral-300 py-10 px-10"
                                           >
-                                                <div>
-                                                      <div></div>
-                                                      <div>
-                                                            <h2 className="text-2xl font-bold">
-                                                                  {blog.title}
-                                                            </h2>
-                                                            <p>
-                                                                  {
-                                                                        blog.subtitle
-                                                                  }
-                                                            </p>
-                                                      </div>
-                                                      <div>
+                                                <div className="flex flex-col gap-6 w-full px-5">
+                                                      <div className="flex-1">
+                                                            <div></div>
                                                             <div>
+                                                                  <h2 className="text-2xl font-bold">
+                                                                        {
+                                                                              blog.title
+                                                                        }
+                                                                  </h2>
+                                                                  <p>
+                                                                        {
+                                                                              blog.subtitle
+                                                                        }
+                                                                  </p>
+                                                            </div>
+                                                      </div>
+                                                      <div className="flex items-center justify-between">
+                                                            <div className="flex items-center gap-5">
                                                                   <p>
                                                                         {new Date(
                                                                               blog?.createdAt
@@ -65,6 +74,29 @@ const HomePage = () => {
                                                                               }
                                                                         )}
                                                                   </p>
+                                                                  <span className="flex items-center gap-2">
+                                                                        <SlLike />
+                                                                        <span>
+                                                                              22
+                                                                        </span>
+                                                                  </span>
+                                                                  <span className="flex items-center gap-2">
+                                                                        <FaRegCommentAlt />
+                                                                        <span>
+                                                                              22
+                                                                        </span>
+                                                                  </span>
+                                                            </div>
+                                                            <div className="flex items-center gap-5 text-2xl">
+                                                                  <span className="flex items-center gap-2">
+                                                                        <CiCircleMinus />
+                                                                  </span>
+                                                                  <span className="flex items-center gap-2">
+                                                                        <CiBookmarkPlus />
+                                                                  </span>
+                                                                  <span className="flex items-center gap-2">
+                                                                        <BsThreeDots />
+                                                                  </span>
                                                             </div>
                                                       </div>
                                                 </div>
@@ -85,7 +117,7 @@ const HomePage = () => {
                                     <p>No blogs found</p>
                               )}
                         </div>
-                        <div className="w-[30%] h-[500px] bg-blue-600"></div>
+                        <div className="hidden lg:block lg:w-[30%] h-[500px] bg-blue-600"></div>
                   </div>
             </div>
       );
