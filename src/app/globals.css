@@ -54,3 +54,10 @@ h6 {
 .jodit-status-bar__item-right a {
       display: none !important;
 }
+
+.blog-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+}

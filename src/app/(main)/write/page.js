@@ -182,7 +182,7 @@ const Page = ({ placeholder }) => {
       };
 
       return (
-            <div className="w-full lg:w-[75%] mx-auto py-10 px-10 flex flex-col lg:flex-row items-start gap-5">
+            <div className="py-10 px-10 flex flex-col lg:flex-row items-start gap-5">
                   <form
                         className="w-full lg:w-[70%]"
                         onSubmit={handleSubmit(handleData)}

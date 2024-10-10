@@ -9,6 +9,7 @@ import { FaRegCommentAlt } from "react-icons/fa";
 import { CiCircleMinus, CiBookmarkPlus } from "react-icons/ci";
 import { FaBookmark } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
+import Link from "next/link";
 
 const HomePage = () => {
       const [blogs, setBlogs] = useState([]);
@@ -35,12 +36,13 @@ const HomePage = () => {
 
       return (
             <div>
-                  <div className="w-full xl:max-w-[70%] mx-auto flex items-start gap-5">
+                  <div className="flex items-start gap-5">
                         <div className="w-full lg:w-[70%] flex  flex-col gap-10">
                               {/* Display the fetched blogs here */}
                               {blogs.length > 0 ? (
                                     blogs.map((blog) => (
-                                          <div
+                                          <Link
+                                                href={`/blog/${blog._id}`}
                                                 key={blog.id}
                                                 className="flex items-center justify-between border-b border-b-neutral-300 py-10 px-10"
                                           >
@@ -111,7 +113,7 @@ const HomePage = () => {
                                                             className="rounded-md w-32 aspect-square"
                                                       />
                                                 </div>
-                                          </div>
+                                          </Link>
                                     ))
                               ) : (
                                     <p>No blogs found</p>
