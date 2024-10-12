@@ -9,13 +9,11 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { AiOutlineCloseCircle } from "react-icons/ai"; // Import X icon
 import toast from "react-hot-toast";
 import TagsEditor from "@/Components/TagsEditor/TagsEditor";
-// import TagsEditor from "@/Components/TagsEditor/TagsEditor";
+const TextEditor = dynamic(() => import("@/Components/TextEditor/TextEditor"), {
+      ssr: false,
+});
 
 const Page = ({ placeholder }) => {
-      const TextEditor = dynamic(
-            () => import("@/Components/TextEditor/TextEditor"),
-            { ssr: false }
-      );
       const [content, setContent] = useState("");
       const [productTags, setProductTags] = useState([]);
       const [imageSrc, setImageSrc] = useState("");
