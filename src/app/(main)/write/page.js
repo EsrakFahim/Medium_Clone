@@ -71,7 +71,7 @@ const Page = ({ placeholder }) => {
             console.log(blogData);
 
             const response = await axios.post(
-                  "http://localhost:5050/api/v1/blog/upload",
+                  "https://blog-server-4x1x55nqc-esrakfahims-projects.vercel.app/api/v1/blog/upload",
                   blogData,
 
                   {
@@ -114,7 +114,7 @@ const Page = ({ placeholder }) => {
 
             try {
                   const response = await axios.post(
-                        "http://localhost:5050/api/v1/image/upload",
+                        "https://blog-server-4x1x55nqc-esrakfahims-projects.vercel.app/api/v1/image/upload",
                         formData,
                         {
                               headers: {
