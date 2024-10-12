@@ -369,11 +369,11 @@ const Page = ({ placeholder }) => {
                               )}
                         </div>
 
-                        {/* <TextEditor
+                        <TextEditor
                               placeholder={placeholder}
                               content={content}
                               setContent={setContent}
-                        /> */}
+                        />
 
                         <button
                               type="submit"
