@@ -17,18 +17,25 @@ const HomePage = () => {
       const handleBlogFetch = async () => {
             try {
                   const res = await axios.get(
-                        "https://blog-server-4x1x55nqc-esrakfahims-projects.vercel.app/api/v1/blog/"
+                        "https://blog-server-mwxjhokv0-esrakfahims-projects.vercel.app/api/v1/blog/",
+                        {
+                              withCredentials: true, // Include credentials such as cookies
+                              headers: {
+                                    "Content-Type": "application/json",
+                              },
+                        }
                   );
+
                   if (res.data && res.data.data) {
                         setBlogs(res.data.data);
                   } else {
                         toast.error("Failed to fetch blogs");
                   }
             } catch (error) {
+                  console.error("Error:", error);
                   toast.error("An error occurred while fetching blogs");
             }
       };
-
       // Fetch blogs only once when the component is mounted
       useEffect(() => {
             handleBlogFetch();

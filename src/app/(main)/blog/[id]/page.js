@@ -21,7 +21,7 @@ const Page = ({ params }) => {
       const handleSingleBlogFetch = async () => {
             try {
                   const res = await axios.get(
-                        `https://blog-server-4x1x55nqc-esrakfahims-projects.vercel.app/api/v1/blog/${id}`
+                        `https://blog-server-mwxjhokv0-esrakfahims-projects.vercel.app/api/v1/blog/${id}`
                   );
                   setBlog(res.data.data);
                   setLoading(false); // Disable loading when data is fetched
