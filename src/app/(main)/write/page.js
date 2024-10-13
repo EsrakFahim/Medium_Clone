@@ -115,12 +115,12 @@ const Page = ({ placeholder }) => {
             try {
                   const response = await axios.post(
                         `${process.env.NEXT_PUBLIC_SERVER_URL_LOCAL}/api/v1/image/upload`,
-                        formData,
+                        formData /* ,
                         {
                               headers: {
                                     "Content-Type": "multipart/form-data",
                               },
-                        }
+                        } */
                   );
                   if (response) {
                         setLoadImage(false);

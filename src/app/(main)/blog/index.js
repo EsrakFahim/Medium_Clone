@@ -10,7 +10,6 @@ import { CiCircleMinus, CiBookmarkPlus } from "react-icons/ci";
 import { BsThreeDots } from "react-icons/bs";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 
 const HomePage = () => {
       const [blogs, setBlogs] = useState([]);

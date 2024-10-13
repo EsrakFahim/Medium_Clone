@@ -2,6 +2,8 @@ import localFont from "next/font/local";
 import "../globals.css";
 import Navbar from "@/Components/Utils/Navbar/Navbar";
 import { Toaster } from "react-hot-toast";
+import "react-loading-skeleton/dist/skeleton.css";
+
 
 const geistSans = localFont({
       src: "../fonts/GeistVF.woff",
