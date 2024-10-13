@@ -17,7 +17,7 @@ const HomePage = () => {
       const handleBlogFetch = async () => {
             try {
                   const res = await axios.get(
-                        `${process.env.NEXT_PUBLIC_SERVER_URL_LOCAL}/api/v1/blog/`,
+                        `https://blog-server-4b406zbrv-esrakfahims-projects.vercel.app/api/v1/blog/`,
                         {
                               withCredentials: true, // Include credentials such as cookies
                               headers: {
