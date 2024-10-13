@@ -18,13 +18,13 @@ const HomePage = () => {
       const handleBlogFetch = async () => {
             try {
                   const res = await axios.get(
-                        `${process.env.NEXT_PUBLIC_SERVER_URL_LOCAL}/api/v1/blog/`,
+                        `${process.env.NEXT_PUBLIC_SERVER_URL_LOCAL}/api/v1/blog/`/* ,
                         {
                               // withCredentials: true, // Include credentials such as cookies
                               headers: {
                                     "Content-Type": "application/json",
                               },
-                        }
+                        } */
                   );
 
                   if (res.data && res.data.data) {
