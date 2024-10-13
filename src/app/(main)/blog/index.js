@@ -19,7 +19,7 @@ const HomePage = () => {
                   const res = await axios.get(
                         `https://blog-server-4b406zbrv-esrakfahims-projects.vercel.app/api/v1/blog/`,
                         {
-                              withCredentials: true, // Include credentials such as cookies
+                              // withCredentials: true, // Include credentials such as cookies
                               headers: {
                                     "Content-Type": "application/json",
                               },
