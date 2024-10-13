@@ -13,7 +13,7 @@ import Link from "next/link";
 
 const HomePage = () => {
       const [blogs, setBlogs] = useState([]);
-      console.log(process.env.NEXT_PUBLIC_SERVER_URL_LOCAL);
+      console.log(process.env.NEXT_PUBLIC_SERVER_URL_LOCAL)
 
       const handleBlogFetch = async () => {
             try {
