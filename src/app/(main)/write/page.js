@@ -71,7 +71,7 @@ const Page = ({ placeholder }) => {
             console.log(blogData);
 
             const response = await axios.post(
-                  "https://blog-server-mwxjhokv0-esrakfahims-projects.vercel.app/api/v1/blog/upload",
+                  `${process.env.NEXT_PUBLIC_SERVER_URL_LOCAL}/api/v1/blog/upload`,
                   blogData,
 
                   {
@@ -114,7 +114,7 @@ const Page = ({ placeholder }) => {
 
             try {
                   const response = await axios.post(
-                        "https://blog-server-mwxjhokv0-esrakfahims-projects.vercel.app/api/v1/image/upload",
+                        `${process.env.NEXT_PUBLIC_SERVER_URL_LOCAL}/api/v1/image/upload`,
                         formData,
                         {
                               headers: {

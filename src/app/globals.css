@@ -57,7 +57,8 @@ h6 {
 
 .blog-image img {
       width: 100%;
-      height: auto;
+      /* height: auto; */
+      aspect-ratio: 1;
       display: block;
       object-fit: cover;
 }
