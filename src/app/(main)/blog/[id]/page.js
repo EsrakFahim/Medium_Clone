@@ -7,15 +7,15 @@ import { SlLike } from "react-icons/sl";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { CiBookmarkPlus, CiShare2 } from "react-icons/ci";
 import { BsThreeDots } from "react-icons/bs";
-import { ClipLoader } from "react-spinners"; // For loading spinner
+import Skeleton from "react-loading-skeleton"; // Import Skeleton
 import Image from "next/image";
 import Link from "next/link";
+import "react-loading-skeleton/dist/skeleton.css"; // Import Skeleton styles
 
 const Page = ({ params }) => {
       const { id } = params;
       const [blog, setBlog] = useState({});
       const [loading, setLoading] = useState(true); // Set loading to true initially
-      const [imageLoaded, setImageLoaded] = useState(false); // State for image load
 
       // Client-side data fetching
       const handleSingleBlogFetch = async () => {
@@ -38,31 +38,46 @@ const Page = ({ params }) => {
             }
       }, [id]);
 
-      // Handle image loading to remove blur
-      const handleImageLoad = () => {
-            setImageLoaded(true); // Image has been loaded
-      };
-
-      if (loading) {
-            return (
-                  <div className="flex justify-center items-center h-screen">
-                        <ClipLoader size={60} color="#4A90E2" />
-                  </div>
-            );
-      }
-
       return (
             <div className="max-w-[70%] mx-auto blog-image">
-                  {blog && (
+                  {loading ? (
+                        // Display Skeletons while loading
                         <>
-                              <div>
+                              <Skeleton
+                                    height={40}
+                                    width={`80%`}
+                                    className="mb-4"
+                              />
+                              <Skeleton height={500} className="mb-4" />
+                              <Skeleton
+                                    height={20}
+                                    width={`60%`}
+                                    className="mb-4"
+                              />
+                              <Skeleton
+                                    height={20}
+                                    width={`40%`}
+                                    className="mb-2"
+                              />
+                              <Skeleton
+                                    count={10}
+                                    height={15}
+                                    className="mb-2"
+                              />
+                              <Skeleton height={50} className="mb-4" />
+                              <Skeleton
+                                    height={30}
+                                    width={`30%`}
+                                    className="mb-2"
+                              />
+                        </>
+                  ) : (
+                        blog && (
+                              <>
                                     <div>
-                                          <h1>{blog.title}</h1>
-                                    </div>
-                                    <div>
-                                          <div className="h-10">
-                                                {/* Writer content */}
-                                          </div>
+                                          <h1 className="text-3xl font-bold mb-4">
+                                                {blog.title}
+                                          </h1>
                                           <div className="border-y border-neutral-300 py-6 px-3 my-4 flex items-center justify-between">
                                                 <div className="text-xl flex items-center gap-5">
                                                       <span className="flex items-center gap-3">
@@ -86,26 +101,18 @@ const Page = ({ params }) => {
                                                       </span>
                                                 </div>
                                           </div>
+                                          {/* Blog content */}
+                                          <div
+                                                className="blog-content my-10"
+                                                dangerouslySetInnerHTML={{
+                                                      __html: blog?.content,
+                                                }}
+                                          />
                                     </div>
 
-                                    {/* Apply a class for the blog content */}
-                                    <div
-                                          className="blog-content my-10"
-                                          dangerouslySetInnerHTML={{
-                                                __html: blog?.content,
-                                          }}
-                                    />
-                              </div>
-
-                              <div>
-                                    {/* need to add author some more blogs */}
-                              </div>
-
-                              {/* Tags part */}
-                              <div className="border-y border-neutral-300 py-6 px-3 my-4 flex items-center gap-5 flex-wrap">
-                                    {blog?.tags.map((tag, _index) => {
-                                          console.log(tag);
-                                          return (
+                                    {/* Tags part */}
+                                    <div className="border-y border-neutral-300 py-6 px-3 my-4 flex items-center gap-5 flex-wrap">
+                                          {blog?.tags.map((tag, _index) => (
                                                 <Link
                                                       key={_index}
                                                       href={`/blog/tag/${tag}`}
@@ -113,12 +120,12 @@ const Page = ({ params }) => {
                                                 >
                                                       <span>{tag}</span>
                                                 </Link>
-                                          );
-                                    })}
-                              </div>
+                                          ))}
+                                    </div>
 
-                              <div>{/* Recommended Blogs*/}</div>
-                        </>
+                                    <div>{/* Recommended Blogs */}</div>
+                              </>
+                        )
                   )}
             </div>
       );
