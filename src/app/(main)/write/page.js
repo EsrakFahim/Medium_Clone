@@ -9,6 +9,7 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { AiOutlineCloseCircle } from "react-icons/ai"; // Import X icon
 import toast from "react-hot-toast";
 import TagsEditor from "@/Components/TagsEditor/TagsEditor";
+import { useRouter } from "next/navigation";
 const TextEditor = dynamic(() => import("@/Components/TextEditor/TextEditor"), {
       ssr: false,
 });
@@ -21,6 +22,7 @@ const Page = ({ placeholder }) => {
       const [blogCoverImage, setBlogCoverImage] = useState("");
       const [blogCoverImageFile, setBlogCoverImageFile] = useState("");
       const [loadImage, setLoadImage] = useState(false);
+      const router = useRouter();
       const {
             register,
             handleSubmit,
@@ -83,6 +85,7 @@ const Page = ({ placeholder }) => {
 
             if (response) {
                   toast.success(response.data.message);
+                  router.push("/");
             }
 
             localStorage.removeItem("blogTitle");
