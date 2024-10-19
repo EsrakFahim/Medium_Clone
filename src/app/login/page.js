@@ -1,8 +1,8 @@
-"use client"; // Make sure this is a client component
+"use client"; // Ensure this is a client component
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-const axios = require("axios");
+import axios from "axios"; // Direct import of axios
 
 const LoginPage = () => {
       const [step, setStep] = useState(1);
@@ -10,37 +10,37 @@ const LoginPage = () => {
       const [password, setPassword] = useState("");
       const router = useRouter();
 
+      // Handle Next Step (Email submission)
       const handleNextStep = (e) => {
             e.preventDefault();
             if (email) setStep(2);
       };
 
+      // Handle Login (Password submission)
       const handleLogin = async (e) => {
             e.preventDefault();
-
             try {
                   const response = await axios.post(
                         `${process.env.NEXT_PUBLIC_SERVER_URL_LOCAL}/api/v1/user/login`,
                         { email, password },
-                        { withCredentials: true } // Include cookies from the server
+                        { withCredentials: true } // Ensure cookies are sent and saved
                   );
 
                   if (response.status === 200) {
                         const data = response.data;
                         console.log("Login success:", data);
-                        alert(data.message); // Optional: Display success message
+                        alert(data.message); // Show success message
 
-                        const { user, accessToken } = data.data;
+                        const { user } = data.data;
 
-                        // Use the accessToken for authorization in client routes if needed
+                        // Route based on user role
                         if (user.role === "admin") {
                               router.push("/admin"); // Redirect admin users
                         } else {
                               router.push("/dashboard"); // Redirect normal users
                         }
                   } else {
-                        const errorData = response.data;
-                        alert(errorData.message); // Handle login failure
+                        alert(response.data.message); // Handle non-200 responses
                   }
             } catch (error) {
                   console.error("Login failed:", error);
