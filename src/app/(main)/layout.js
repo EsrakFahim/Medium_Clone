@@ -4,7 +4,6 @@ import Navbar from "@/Components/Utils/Navbar/Navbar";
 import { Toaster } from "react-hot-toast";
 import "react-loading-skeleton/dist/skeleton.css";
 
-
 const geistSans = localFont({
       src: "../fonts/GeistVF.woff",
       variable: "--font-geist-sans",
@@ -36,3 +35,14 @@ export default function RootLayout({ children }) {
             </html>
       );
 }
+
+// export async function getServerSideProps({ req, res }) {
+//       const accessToken = req.cookies.accessToken;
+
+//       if (!accessToken) {
+//             res.writeHead(302, { Location: "/login" }).end();
+//             return { props: {} };
+//       }
+
+//       return { props: {} };
+// }
