@@ -7,13 +7,16 @@ export function middleware(request) {
       const authToken = request.cookies.get("accessToken")?.value;
       console.log("Access token:", authToken);
 
-      // If user tries to access protected routes without being logged in, redirect to login with intended path
-      if (!authToken && pathname.startsWith("/profile")) {
+      // If user tries to access protected routes without being logged in, redirect to login with the intended path
+      if (
+            !authToken &&
+            (pathname.startsWith("/profile") || pathname.startsWith("/write"))
+      ) {
             console.log(
                   "Unauthorized access to profile, redirecting to login."
             );
             const loginUrl = new URL("/login", request.url);
-            loginUrl.searchParams.set("redirect", pathname); // Store intended route in query
+            loginUrl.searchParams.set("redirect", pathname); // Store the intended route in query
             return NextResponse.redirect(loginUrl);
       }
 
@@ -30,5 +33,5 @@ export function middleware(request) {
 }
 
 export const config = {
-      matcher: ["/profile/:path*", "/login"],
+      matcher: ["/profile/:path*", "/login", "/write"],
 };
