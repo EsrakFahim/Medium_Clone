@@ -1,8 +1,8 @@
-"use client"; // Ensure this is a client component
+"use client"; // Make sure this is a client component
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios"; // Direct import of axios
+const axios = require("axios");
 
 const LoginPage = () => {
       const [step, setStep] = useState(1);
@@ -10,37 +10,39 @@ const LoginPage = () => {
       const [password, setPassword] = useState("");
       const router = useRouter();
 
-      // Handle Next Step (Email submission)
       const handleNextStep = (e) => {
             e.preventDefault();
             if (email) setStep(2);
       };
 
-      // Handle Login (Password submission)
       const handleLogin = async (e) => {
             e.preventDefault();
+
             try {
                   const response = await axios.post(
                         `${process.env.NEXT_PUBLIC_SERVER_URL_LOCAL}/api/v1/user/login`,
                         { email, password },
-                        { withCredentials: true } // Ensure cookies are sent and saved
+                        { withCredentials: true } // Include cookies from the server
                   );
 
                   if (response.status === 200) {
                         const data = response.data;
                         console.log("Login success:", data);
-                        alert(data.message); // Show success message
+                        alert(data.message); // Optional: Display success message
 
-                        const { user } = data.data;
+                        const { user, accessToken } = data.data;
 
-                        // Route based on user role
+                        console.log("User:", user);
+
+                        // Use the accessToken for authorization in client routes if needed
                         if (user.role === "admin") {
-                              router.push("/admin"); // Redirect admin users
+                              // router.push("/admin"); // Redirect admin users
                         } else {
-                              router.push("/dashboard"); // Redirect normal users
+                              router.push("/profile"); // Redirect normal users
                         }
                   } else {
-                        alert(response.data.message); // Handle non-200 responses
+                        const errorData = response.data;
+                        alert(errorData.message); // Handle login failure
                   }
             } catch (error) {
                   console.error("Login failed:", error);
