@@ -1,53 +1,58 @@
 "use client"; // Ensure this is a client component
 
-import { useState } from "react";
-import { set, useForm } from "react-hook-form";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 
 const LoginPage = () => {
       const [step, setStep] = useState(1);
       const [loading, setLoading] = useState(false);
+      const [redirectPath, setRedirectPath] = useState("/profile"); // Default path
       const router = useRouter();
-      const searchParams = useSearchParams();
-      const redirectPath = searchParams.get("redirect") || "/profile"; // Default to profile if no redirect path
 
-      // Initialize react-hook-form for both steps
+      // Initialize react-hook-form
       const {
             register,
             handleSubmit,
             formState: { errors },
-            getValues,
       } = useForm();
 
-      // Step 1: Handle email submission and move to the password step
+      // Extract query params using URLSearchParams on the client side
+      useEffect(() => {
+            const params = new URLSearchParams(window.location.search);
+            const redirect = params.get("redirect");
+            if (redirect) setRedirectPath(redirect);
+      }, []);
+
+      // Handle step 1: Email submission
       const handleNextStep = (data) => {
             console.log("Email submitted:", data.email);
-            setStep(2); // Move to the next step
+            setStep(2);
       };
 
-      // Step 2: Handle final login submission
+      // Handle final login submission
       const handleLogin = async (data) => {
-            const { email, password } = data; // Get email and password from form data
-            setLoading(true); // Show loading spinner
+            const { email, password } = data;
+            setLoading(true);
+
             try {
                   const response = await axios.post(
                         `${process.env.NEXT_PUBLIC_SERVER_URL_LOCAL}/api/v1/user/login`,
                         { email, password },
-                        { withCredentials: true } // Include cookies from the server
+                        { withCredentials: true }
                   );
 
+                  setLoading(false);
                   if (response.status === 200) {
-                        setLoading(false); // Hide loading spinner
                         console.log("Login success:", response.data);
-                        alert(response.data.message); // Optional: Success message
-
-                        // Redirect to the intended route after login
+                        alert(response.data.message);
                         router.replace(redirectPath);
                   } else {
-                        alert(response.data.message); // Handle login failure
+                        alert(response.data.message);
                   }
             } catch (error) {
+                  setLoading(false);
                   console.error("Login failed:", error);
                   alert("Something went wrong. Please try again.");
             }
