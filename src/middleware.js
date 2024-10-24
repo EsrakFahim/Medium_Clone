@@ -37,28 +37,22 @@ export async function middleware(request) {
                   console.log("User role:", role);
 
                   // Ensure we don't re-verify token unnecessarily
-                  if (pathname === "/login" ) {
+                  if (pathname === "/login") {
                         if (role === "admin") {
                               console.log("Redirecting to admin dashboard.");
-                              return NextResponse.redirect(
-                                    new URL("/admin", request.url)
-                              );
+                              return NextResponse.redirect(new URL("/admin", request.url));
                         }
 
                         if (role === "user") {
                               console.log("Redirecting to profile page.");
-                              return NextResponse.redirect(
-                                    new URL("/profile", request.url)
-                              );
+                              return NextResponse.redirect(new URL("/profile", request.url));
                         }
                   }
 
                   // Protect admin routes
                   if (pathname.startsWith("/admin") && role !== "admin") {
                         console.log("Access denied for non-admin user.");
-                        return NextResponse.redirect(
-                              new URL("/unauthorized", request.url)
-                        );
+                        return NextResponse.redirect(new URL("/unauthorized", request.url));
                   }
             } catch (error) {
                   console.error("Error verifying token:", error);
